@@ -1,0 +1,19 @@
+module.exports = {
+	googleConfig: {
+		clientId:
+			"clientID",
+		clientSecret: "clientSecret",
+		redirect: "redirect"
+	},
+	mailgun: {
+		apiKey: "apikey",
+		domain: "domain"
+	},
+	database: {
+		host: "localhost",
+		dialect: "mysql",
+		database: "database",
+		user: "root",
+		password: "Password"
+	}
+};

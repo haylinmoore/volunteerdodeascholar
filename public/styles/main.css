@@ -1,0 +1,14 @@
+html,
+body {
+	height: 100%;
+}
+
+#main {
+	margin-top: 30px;
+	min-height: calc(100% - 138px);
+}
+
+.card-margin {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}

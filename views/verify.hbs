@@ -1,0 +1,40 @@
+<h3>Thank you, please verify the volunteer time done by {{user.name}}</h3>
+<p>Please go over the information shown below, and verify or reject the volunteer's claim. If accepted it will be added
+    into thier volunteer portfolio. If the data is partially incorrect, you may edit it to fix those mistakes. If
+    rejected the volunteer time is deleted from our servers.
+</p>
+
+<form action="/verify/{{work.id}}" method="post">
+    <div class="form-group">
+        <label>Job Name</label>
+        <input type="text" class="form-control" value="{{work.job}}" name="job" required>
+    </div>
+    <div class="form-group">
+        <label>Location</label>
+        <input type="text" class="form-control" value="{{work.location}}" name="location" required>
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" rows="2" placeholder="Description" name="description"
+            required>{{work.description}}</textarea>
+    </div>
+    <div class="form-group">
+        <label>Date Of Work</label>
+        <input type="text" data-provide="datepicker" class="form-control" name="date" value="{{work.start}}"
+            placeholder="Date" required>
+    </div>
+    <div class="form-group">
+        <label>Hours of Work</label>
+        <input type="number" class="form-control" name="hours" placeholder="Hours Spent" value="{{work.time.[0]}}"
+            required>
+    </div>
+    <div class="form-group">
+        <label>Minutes of Work</label>
+        <input type="number" class="form-control" name="minutes" placeholder="Hours Spent" value="{{work.time.[1]}}"
+            required>
+    </div>
+    <button type="submit" class="btn btn-success btn-lg" name="verify" value="true">Verify/Modify</button>
+    <button type="submit" class="btn btn-danger btn-lg" name="reject" value="true">Reject</button>
+</form>
+
+<br>

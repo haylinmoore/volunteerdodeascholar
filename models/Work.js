@@ -9,7 +9,7 @@ const Work = db.define(
 			primaryKey: true,
 			autoIncrement: true
 		},
-		volunteerID: {
+		userid: {
 			type: Sequelize.INTEGER
 		},
 		job: {

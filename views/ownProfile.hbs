@@ -8,7 +8,7 @@
         {{#each work.jobs}}
             <div class="col-sm-12 col-md-6 col-xl-4 card-margin">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{this.job}}
                             {{#if this.verified}}
                                 <span style="float:right;color:green">Verified</span>
@@ -29,6 +29,10 @@
                         </p>
                         <p class="card-text">Supervisor: {{this.supervisor}}</p>
                         <p class="card-subtitle mb-2 text-muted">Recorded on {{this.dateAdded}}</p>
+                        <div class="card-body d-flex flex-column mt-auto">
+                            <a class="btn btn-danger mt-auto" href="/delete/{{this.id}}" role="button"
+                                style="float:right; width:100%;">Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>

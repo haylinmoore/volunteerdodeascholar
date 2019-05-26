@@ -4,7 +4,7 @@ const path = require("path");
 const session = require("express-session");
 const logger = require("morgan");
 
-const indexRouter = require("./routes/index");
+const indexRouter = require("./routes/router");
 const db = require("./src/database.js");
 const app = express();
 

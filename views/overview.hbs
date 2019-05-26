@@ -17,7 +17,7 @@
                         </p>
                         <div class="btn-group" role="group">
                             <a class="btn btn-primary mt-auto" href="/profile/{{this.email}}" role="button">Profile</a>
-                            <a class="btn btn-danger mt-auto" href="/removeclass/{{this.userid}}"
+                            <a class="btn btn-danger mt-auto" href="/removeClass/{{this.userid}}"
                                 role="button">Remove</a>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
         <div class="col-sm-12 col-md-6 col-xl-4 card-margin">
             <div class="card h-100">
                 <div class="card-body d-flex flex-column">
-                    <form action="/addstudent" method="post">
+                    <form action="/addStudent" method="post">
                         <h5 class="card-title">Add Student</h5>
                         <input type="email" class="form-control" placeholder="Student Email" name="email" required><br>
                         <button type="submit" class="btn btn-primary mt-auto" style="width: 100%">Add Student</button>

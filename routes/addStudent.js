@@ -9,7 +9,11 @@ module.exports.POST = function(req, res) {
 				studentID: student[0].userid
 			};
 			Class.create(body).then(function(data) {
-				res.redirect("/overview");
+				if (req.query.redir) {
+					res.redirect("/" + req.query.redir);
+				} else {
+					res.redirect("/overview");
+				}
 			});
 		} else {
 			res.render("error", {

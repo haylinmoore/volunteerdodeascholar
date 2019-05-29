@@ -4,7 +4,18 @@ const processJobs = require("../src/processJobs.js");
 
 module.exports = {};
 module.exports.POST = function(req, res) {
-	Work.findAll({ where: { id: req.params.id } }).then(function(work) {
+	Work.findAll({
+		where: {
+			id: req.params.id,
+			userid: req.params.userid,
+			dateAdded: req.params.dateAdded,
+			verified: false
+		}
+	}).then(function(work) {
+		if (work.length == 0) {
+			res.redirect("/err/4");
+			return;
+		}
 		work = processJobs(work).jobs[0];
 		User.findAll({ where: { userid: work.userid } }).then(function(user) {
 			if (req.body.verify) {
@@ -35,9 +46,17 @@ module.exports.POST = function(req, res) {
 };
 
 module.exports.GET = function(req, res) {
-	Work.findAll({ where: { id: req.params.id } }).then(function(work) {
+	Work.findAll({
+		where: {
+			id: req.params.id,
+			userid: req.params.userid,
+			dateAdded: req.params.dateAdded,
+			verified: false
+		}
+	}).then(function(work) {
 		if (work.length == 0) {
 			res.redirect("/err/4");
+			return;
 		}
 		work = processJobs(work).jobs[0];
 		User.findAll({ where: { userid: work.userid } }).then(function(user) {

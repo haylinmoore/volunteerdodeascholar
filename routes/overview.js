@@ -17,9 +17,11 @@ module.exports.GET = function(req, res) {
 				studentIDs.push({ userid: classIDs[i].studentID });
 			}
 			console.log(studentIDs);
-			User.findAll({ where: { [Op.or]: studentIDs } }).then(students => {
+			User.findAll({
+				where: { [Op.or]: studentIDs }
+			}).then(students => {
 				Work.findAll({ where: { [Op.or]: studentIDs } }).then(works => {
-					let studentData = {};
+					let studentData = [];
 					for (let i in students) {
 						studentData[students[i].userid] = students[i];
 						studentData[students[i].userid].total = 0;
@@ -35,6 +37,13 @@ module.exports.GET = function(req, res) {
 							Math.floor((studentData[i].total % 3600) / 60)
 						];
 					}
+
+					studentData.sort(function(a, b) {
+						var x = a.name.toLowerCase();
+						var y = b.name.toLowerCase();
+						return x < y ? -1 : x > y ? 1 : 0;
+					});
+
 					res.render("overview", {
 						layout: "default",
 						session: req.session.user,

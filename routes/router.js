@@ -1,41 +1,44 @@
 const express = require("express");
 const router = express.Router();
+const sessionChecker = require("./sessionCheckerMiddleman");
 
-// middleware function to check for logged-in users
-const sessionChecker = (req, res, next) => {
-	if (req.session.valid && req.session.user) {
-		next();
-	} else {
-		res.redirect("/login");
-	}
-};
+router.get("/", sessionChecker.all, require("./index").GET);
 
-router.get("/", sessionChecker, require("./index.js").GET);
+router.get("/overview", sessionChecker.teacher, require("./overview").GET);
 
-router.get("/overview", sessionChecker, require("./overview.js").GET);
+router.get("/profile/:id", require("./profile").GET);
+router.get("/exportProfile/:id", require("./exportProfile").GET);
 
-router.get("/profile/:id", require("./profile.js").GET);
+router.get("/verify/:id/:userid/:dateAdded", require("./verify").GET);
 
-router.get("/verify/:id", require("./verify.js").GET);
+router.post("/verify/:id/:userid/:dateAdded", require("./verify").POST);
 
-router.post("/verify/:id", require("./verify.js").POST);
+router.get(
+	"/removeClass/:id",
+	sessionChecker.teacher,
+	require("./removeClass").GET
+);
 
-router.get("/removeClass/:id", sessionChecker, require("./removeClass.js").GET);
+router.get("/massAdd", sessionChecker.teacher, require("./massAdd").GET);
 
-router.get("/delete/:id", sessionChecker, require("./delete.js").GET);
+router.get("/delete/:id", sessionChecker.student, require("./delete").GET);
 
-router.get("/err/:id", require("./err.js").GET);
+router.get("/err/:id", require("./err").GET);
 
-router.get("/logout", sessionChecker, require("./logout.js").GET);
+router.get("/logout", sessionChecker.all, require("./logout").GET);
 
-router.post("/addStudent", sessionChecker, require("./addStudent.js").POST);
+router.post(
+	"/addStudent",
+	sessionChecker.teacher,
+	require("./addStudent").POST
+);
 
-router.post("/addJob", sessionChecker, require("./addJob.js").GET);
+router.post("/addJob", sessionChecker.student, require("./addJob").POST);
 
-router.get("/login", require("./login.js").GET);
+router.get("/login", require("./login").GET);
 
-router.get("/auth", require("./auth.js").GET);
+router.get("/auth", require("./auth").GET);
 
-router.post("/auth", require("./auth.js").POST);
+router.post("/auth", require("./auth").POST);
 
 module.exports = router;

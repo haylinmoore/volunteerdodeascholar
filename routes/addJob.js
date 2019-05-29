@@ -2,7 +2,17 @@ const Work = require("../models/Work");
 const sendSupervisorEmail = require("../src/supervisor.js");
 
 module.exports = {};
-module.exports.GET = function(req, res) {
+module.exports.POST = function(req, res) {
+	if (
+		isNaN(req.body.hours) ||
+		isNaN(req.body.minutes) ||
+		!req.body.supervisor.includes("@")
+	) {
+		res.send(
+			"You're not cool, stop trying to mess up my system </3 This has been reported to the system administrator and the principal of your school."
+		);
+		return;
+	}
 	let body = {
 		userid: req.session.user.userid,
 		job: req.body.job,
@@ -23,6 +33,8 @@ module.exports.GET = function(req, res) {
 				description: req.body.description,
 				date: req.body.date,
 				id: data.id,
+				userid: data.userid,
+				dateAdded: data.dateAdded,
 				time: `${req.body.hours} hour(s) and ${req.body.minutes} minute(s)`,
 				supervisor: req.body.supervisor
 			});

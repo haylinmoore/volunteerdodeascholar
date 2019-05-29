@@ -3,6 +3,7 @@ const hbs = require("express-handlebars");
 const path = require("path");
 const session = require("express-session");
 const logger = require("morgan");
+const crypto = require("crypto");
 
 const indexRouter = require("./routes/router");
 const db = require("./src/database.js");
@@ -30,9 +31,9 @@ app.use(logger("dev"));
 app.use(
 	session({
 		key: "user_sid",
-		secret: "somerandonstuffs",
-		resave: false,
-		saveUninitialized: false,
+		secret: crypto.randomBytes(20).toString("hex"),
+		resave: true,
+		saveUninitialized: true,
 		cookie: {
 			expires: 600000
 		}

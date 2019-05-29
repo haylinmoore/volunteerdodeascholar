@@ -8,7 +8,7 @@ module.exports = function(data) {
 		template: "supervisor_email",
 		"v:name": data.name,
 		"v:job": data.job,
-		"v:id": data.id,
+		"v:id": data.id + "/" + data.userid + "/" + data.dateAdded,
 		"v:date": data.date,
 		"v:description": data.description,
 		"v:time": data.time

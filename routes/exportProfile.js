@@ -2,9 +2,12 @@ const Work = require("../models/Work");
 const User = require("../models/User");
 const processJobs = require("../src/processJobs.js");
 const arrayToCSV = require("../src/arrayToCSV");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 module.exports = {};
 module.exports.GET = function(req, res) {
+	let sinceDate = new Date(req.query.since).valueOf() / 1000 || 0;
 	let where = {};
 	if (req.params.id.includes("@")) {
 		where = { email: req.params.id };
@@ -21,7 +24,7 @@ module.exports.GET = function(req, res) {
 		if (user.length == 1) {
 			user = user[0];
 			Work.findAll({
-				where: { userid: user.userid },
+				where: { userid: user.userid, start: { [Op.gte]: sinceDate } },
 				order: [["start", "DESC"]]
 			}).then(function(data) {
 				let work = processJobs(data);

@@ -9,7 +9,7 @@ module.exports.POST = function(req, res) {
 		!req.body.supervisor.includes("@")
 	) {
 		res.send(
-			"You're not cool, stop trying to mess up my system </3 This has been reported to the system administrator and the principal of your school."
+			"Thats not a very epic gamer moment of you, stop trying to mess up my system </3 This has been reported to the system administrator and the principal of your school."
 		);
 		return;
 	}

@@ -7,7 +7,7 @@
         {{#each work.jobs}}
             <div class="col-sm-12 col-md-6 col-xl-4 card-margin">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{this.job}}
                             {{#if this.verified}}
                                 <span style="float:right;color:green">Verified</span>
@@ -28,9 +28,63 @@
                         </p>
                         <p class="card-text">Supervisor: {{this.supervisor}}</p>
                         <p class="card-subtitle mb-2 text-muted">Recorded on {{this.dateAdded}}</p>
+                        {{#if ../profile.teacher}}
+                            <div class="btn-group mt-auto" role="group">
+                                {{#unless this.verified}}
+                                    <a class="btn btn-primary mt-auto"
+                                        href="/verify/{{this.id}}/{{../user.userid}}/{{this.numDateAdded}}"
+                                        role="button" style="float:right; width:100%;">Veirfy</a>
+                                {{/unless}}
+                                <a class="btn btn-danger mt-auto" href="/delete/{{this.id}}" role="button"
+                                    style="float:right; width:100%;">Delete</a>
+                            </div>
+                        {{/if}}
+
+                        {{#if ../profile.owner}}
+                            <div class="btn-group mt-auto" role="group">
+                                <a class="btn btn-danger mt-auto" href="/delete/{{this.id}}" role="button"
+                                    style="float:right; width:100%;">Delete</a>
+                            </div>
+                        {{/if}}
+
                     </div>
                 </div>
             </div>
         {{/each}}
+
+        {{#if profile.owner}}
+
+            <div class="col-sm-12 col-md-6 col-xl-4 card-margin">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Job</h5>
+                        <form action="/addJob" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Title of Job" name="job" required>
+                                <br>
+                                <input type="text" class="form-control" placeholder="Location of Job" name="location"
+                                    required>
+                                <br>
+                                <textarea class="form-control" rows="2" placeholder="Description" name="description"
+                                    required></textarea><br>
+                                <input type="text" data-provide="datepicker" class="form-control" name="date"
+                                    placeholder="Date Of Work" required><br>
+                                <input type="number" class="form-control" name="hours" placeholder="Hours Spent"
+                                    required>
+                                <br>
+                                <input type="number" class="form-control" name="minutes" placeholder="Minutes Spent"
+                                    required>
+                                <br>
+                                <input type="email" class="form-control" name="supervisor"
+                                    placeholder="Email of Supervisor" required> <br>
+                                <button type="submit" class="btn btn-primary" style="width: 100%">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        {{/if}}
     </div>
 </div>

@@ -21,7 +21,7 @@ router.get(
 
 router.get("/massAdd", sessionChecker.teacher, require("./massAdd").GET);
 
-router.get("/delete/:id", sessionChecker.student, require("./delete").GET);
+router.get("/delete/:id", sessionChecker.all, require("./delete").GET);
 
 router.get("/err/:id", require("./err").GET);
 

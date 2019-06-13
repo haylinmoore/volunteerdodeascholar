@@ -15,6 +15,7 @@ module.exports = function(data) {
 				day: "numeric"
 			}
 		);
+		work.jobs[i].numDateAdded = work.jobs[i].dateAdded;
 		work.jobs[i].dateAdded = new Date(
 			work.jobs[i].dateAdded * 1000
 		).toLocaleDateString("en-US", {

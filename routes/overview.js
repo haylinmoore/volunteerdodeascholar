@@ -6,6 +6,7 @@ const Op = Sequelize.Op;
 
 module.exports = {};
 module.exports.GET = function(req, res) {
+	let sinceDate = new Date(req.query.since).valueOf() / 1000 || 0;
 	Class.findAll({ where: { teacherID: req.session.user.userid } }).then(
 		classIDs => {
 			let studentIDs = [];
@@ -16,12 +17,14 @@ module.exports.GET = function(req, res) {
 			for (let i in classIDs) {
 				studentIDs.push({ userid: classIDs[i].studentID });
 			}
-			console.log(studentIDs);
 			User.findAll({
 				where: { [Op.or]: studentIDs }
 			}).then(students => {
-				Work.findAll({ where: { [Op.or]: studentIDs } }).then(works => {
+				Work.findAll({
+					where: { [Op.or]: studentIDs, start: { [Op.gte]: sinceDate } }
+				}).then(works => {
 					let studentData = [];
+					let totalTime = 0;
 					for (let i in students) {
 						studentData[students[i].userid] = students[i];
 						studentData[students[i].userid].total = 0;
@@ -30,6 +33,7 @@ module.exports.GET = function(req, res) {
 					for (let i in works) {
 						studentData[works[i].userid].total += works[i].time;
 						studentData[works[i].userid].count++;
+						totalTime += works[i].time;
 					}
 					for (let i in studentData) {
 						studentData[i].time = [
@@ -44,9 +48,18 @@ module.exports.GET = function(req, res) {
 						return x < y ? -1 : x > y ? 1 : 0;
 					});
 
+					studentData.sort(function(a, b) {
+						var x = a.total;
+						var y = b.total;
+						return x > y ? -1 : x < y ? 1 : 0;
+					});
+
 					res.render("overview", {
 						layout: "default",
 						session: req.session.user,
+						totalTime: Math.floor(totalTime / 3600),
+						since: req.query.since,
+						profileQueries: req.query.since ? "?since=" + req.query.since : "",
 						students: studentData
 					});
 				});

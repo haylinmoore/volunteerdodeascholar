@@ -84,3 +84,9 @@ function onListening() {
 	var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
 	debug("Listening on " + bind);
 }
+
+if (process.env.redirect) {
+	process.on("uncaughtException", err => {
+		console.log(`Caught exception: ${err}`);
+	});
+}

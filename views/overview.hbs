@@ -1,31 +1,22 @@
-<h3>Students</h3>
+<h3>Students - Total Time of {{totalTime}} hours {{#if since}} since {{since}} {{/if}}</h3>
 <br><br>
 
 <div class="">
     <div class="card-deck">
-        {{#each students}}
-            <div class="col-sm-12 col-md-6 col-xl-4 card-margin">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{this.name}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{this.email}}</h6>
-                        <p class="card-text">
-                            {{this.time.[0]}} hour(s) and {{this.time.[1]}} minute(s)
-                        </p>
-                        <p class="card-text">
-                            Times volunteered: {{this.count}}
-                        </p>
-                        <div class="btn-group mt-auto" role="group">
-                            <a class="btn btn-primary mt-auto" href="/profile/{{this.email}}" role="button">Profile</a>
-                            <a class="btn btn-secondary mt-auto" href="/exportProfile/{{this.email}}"
-                                role="button">Export</a>
-                            <a class="btn btn-danger mt-auto" href="/removeClass/{{this.userid}}"
-                                role="button">Remove</a>
-                        </div>
-                    </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 card-margin">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <form action="#" method="get">
+                        <h5 class="card-title">Volunteer Cutoff Date</h5>
+                        <input class="form-control mr-sm-2" type="text" data-provide="datepicker" class="form-control"
+                            name="since" placeholder="Cutoff Volunteer Since Date"><br>
+                        <button type="submit" class="btn btn-primary mt-auto" style="width: 100%">View Since Cutoff
+                            Date</button>
+                    </form> <br>
+                    <a href="/overview">Remove Date Cutoff</a>
                 </div>
             </div>
-        {{/each}}
+        </div>
 
         <div class="col-sm-12 col-md-6 col-xl-4 card-margin">
             <div class="card h-100">
@@ -39,5 +30,31 @@
                 </div>
             </div>
         </div>
+
+        {{#each students}}
+            <div class="col-sm-12 col-md-6 col-xl-4 card-margin">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{this.name}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{this.email}}</h6>
+                        <p class="card-text">
+                            {{this.time.[0]}} hour(s) and {{this.time.[1]}} minute(s)
+                        </p>
+                        <p class="card-text">
+                            Times volunteered: {{this.count}}
+                        </p>
+                        <div class="btn-group mt-auto" role="group">
+                            <a class="btn btn-primary mt-auto" href="/profile/{{this.email}}{{../profileQueries}}"
+                                role="button">Profile</a>
+                            <a class="btn btn-secondary mt-auto"
+                                href="/exportProfile/{{this.email}}{{../profileQueries}}" role="button">Export</a>
+                            <a class="btn btn-danger mt-auto" href="/removeClass/{{this.userid}}"
+                                role="button">Remove</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+
     </div>
 </div>

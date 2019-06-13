@@ -4,10 +4,13 @@ const path = require("path");
 const session = require("express-session");
 const logger = require("morgan");
 const crypto = require("crypto");
-
 const indexRouter = require("./routes/router");
 const db = require("./src/database.js");
 const app = express();
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const sessionStore = new SequelizeStore({
+	db: db
+});
 
 // view engine setup
 app.set("view engine", "hbs");
@@ -31,14 +34,20 @@ app.use(logger("dev"));
 app.use(
 	session({
 		key: "user_sid",
-		secret: crypto.randomBytes(20).toString("hex"),
+		secret: "GBHJOUIFDBDHIOFGT^&*T#G@*GOU@BG",
 		resave: true,
-		saveUninitialized: true,
+		saveUninitialized: false,
+		secure: false,
 		cookie: {
-			expires: 600000
-		}
+			maxAge: 60 * 60 * 1000,
+			httpOnly: false
+		},
+		store: sessionStore
 	})
 );
+
+sessionStore.sync();
+
 app.use(express.static("public/"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -37,8 +37,8 @@ module.exports.GET = function(req, res) {
 					}
 					for (let i in studentData) {
 						studentData[i].time = [
-							Math.floor(studentData[i].total / 3600),
-							Math.floor((studentData[i].total % 3600) / 60)
+							Math.floor(studentData[i].total / 3600).toString().padStart(2, "0"),
+							Math.floor((studentData[i].total % 3600) / 60).toString().padStart(2, "0")
 						];
 					}
 
@@ -48,13 +48,9 @@ module.exports.GET = function(req, res) {
 						return x < y ? -1 : x > y ? 1 : 0;
 					});
 
-					studentData.sort(function(a, b) {
-						var x = a.total;
-						var y = b.total;
-						return x > y ? -1 : x < y ? 1 : 0;
-					});
+					let view = "overviewList";
 
-					res.render("overview", {
+					res.render(view, {
 						layout: "default",
 						session: req.session.user,
 						totalTime: Math.floor(totalTime / 3600),

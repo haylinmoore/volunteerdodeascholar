@@ -1,0 +1,41 @@
+<h3>Students - Total Time of {{totalTime}} hours {{#if since}} since {{since}} {{/if}}</h3>
+<form action="#" method="get" class="form-inline" style="width: 100%">
+    <div class="input-group">
+        <input class="form-control mr-sm-2" type="text" data-provide="datepicker" class="form-control" name="since"
+            placeholder="Cutoff Volunteer Since Date">
+        <div class="input-group-append" id="button-addon4">
+            <button type="submit" class="btn btn-primary mt-auto">View Since Cutoff
+                Date</button>
+        </div>
+    </div>
+    <br>
+</form>
+<br>
+
+<div class="">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Time</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each students}}
+                <tr>
+                    <th scope="row"><a href="/profile/{{this.email}}{{../profileQueries}}">{{this.name}}</a></th>
+                    <td>{{this.email}}</td>
+                    <td>{{this.time.[0]}}h:{{this.time.[1]}}m</td>
+                    <td><a href="/removeClass/{{this.userid}}">X</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <a href="/massAdd">Click to add Students</a>
+    <br>
+    <br>
+</div>
